@@ -1,9 +1,10 @@
 import { HttpServer, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import helmet from 'helmet';
 import { AppModule } from '../src/app.module';
 import { CacheService } from '../src/core/cache/cache.service';
 import { DatabaseService } from '../src/database/database.service';
-import helmet from 'helmet';
+import { LoggerService } from '../src/core/logger/logger.service';
 
 let app: INestApplication;
 let server: HttpServer;
@@ -18,6 +19,7 @@ beforeAll(async () => {
 
   // Apply consistent set up to main.ts
   app = moduleFixture.createNestApplication();
+  app.useLogger(app.get(LoggerService));
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
@@ -38,4 +40,4 @@ afterAll(async () => {
   await app.close();
 });
 
-export { server, app };
+export { app, server };

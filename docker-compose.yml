@@ -15,7 +15,6 @@ services:
       - '5432:5432'
     volumes:
       - nestjs_starter_postgres_data:/var/lib/postgresql/data # Needs updating
-      - ./initdb:/docker-entrypoint-initdb.d
 
   nestjs_starter_redis: # Needs updating
     image: redis:alpine

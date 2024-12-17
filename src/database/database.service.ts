@@ -8,12 +8,12 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
   }
 
   async resetDb() {
-    const tableNames: Array<{ tableName: string }> = await this.$queryRaw<
-      Array<{ tableName: string }>
+    const tablenames: Array<{ tablename: string }> = await this.$queryRaw<
+      Array<{ tablename: string }>
     >`SELECT tablename FROM pg_tables WHERE schemaname='public'`;
 
-    const tables = tableNames
-      .map(({ tableName }) => tableName)
+    const tables = tablenames
+      .map(({ tablename }) => tablename)
       .filter((name) => name !== '_prisma_migrations')
       .map((name) => `"public"."${name}"`)
       .join(', ');

@@ -19,7 +19,6 @@ services:
       - '5444:5432' # Different port to avoid conflict with the development environment
     volumes:
       - nestjs_postgres_test:/var/lib/postgresql/data
-      - ./initdb:/docker-entrypoint-initdb.d
 
   nestjs_redis_test:
     image: redis:alpine
