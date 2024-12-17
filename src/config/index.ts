@@ -24,16 +24,16 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
     .default('development'),
   PORT: Joi.number().port().default(3000),
   // Database
-  POSTGRES_HOST: Joi.string().required(),
+  POSTGRES_HOST: Joi.string(),
   POSTGRES_PORT: Joi.number().port().default(5432),
-  POSTGRES_DB: Joi.string().required(),
-  POSTGRES_USER: Joi.string().required(),
-  POSTGRES_PASSWORD: Joi.string().required(),
+  POSTGRES_DB: Joi.string(),
+  POSTGRES_USER: Joi.string(),
+  POSTGRES_PASSWORD: Joi.string(),
   //  Redis
-  REDIS_HOST: Joi.string().required(),
+  REDIS_HOST: Joi.string(),
   REDIS_PORT: Joi.number().port().default(6379),
-  REDIS_USERNAME: Joi.string().required().valid(''),
-  REDIS_PASSWORD: Joi.string().required().valid(''),
+  REDIS_USERNAME: Joi.string().valid(''),
+  REDIS_PASSWORD: Joi.string().valid(''),
 });
 
 export default (): EnvironmentVariables => {
