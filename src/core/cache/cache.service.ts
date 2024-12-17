@@ -17,9 +17,10 @@ export class CacheService {
     await this.cache.delete(key);
   }
 
-  // async reset(): Promise<void> {
-  //   await this.cache.reset();
-  // }
+  async reset(): Promise<void> {
+    // await this.cache.reset();
+    await this.cache.clear();
+  }
   //
   // async onModuleDestroy() {
   //   const redisClient = (this.cache.store as any).getClient();
