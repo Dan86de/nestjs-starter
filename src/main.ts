@@ -5,17 +5,32 @@ import { EnvironmentVariables } from './config';
 import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
 import { LoggerService } from './core/logger/logger.service';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    bufferLogs: true,
-  });
+  const app = await NestFactory.create(
+    AppModule.register({
+      driver: 'orm',
+    }),
+    {
+      bufferLogs: true,
+    },
+  );
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   const port = configService.get<EnvironmentVariables['PORT']>('PORT');
   const host = `0.0.0.0`;
   app.useLogger(app.get(LoggerService));
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  const options = new DocumentBuilder()
+    .setTitle('API')
+    .setDescription('API docs')
+    .setVersion('1.0')
+    // .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('docs', app, document);
   await app.listen(port, host);
 }
 

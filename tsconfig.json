@@ -14,7 +14,7 @@
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
+    "noImplicitOverride": false,
 
     /* If transpiling with TypeScript: */
     "module": "commonjs",
@@ -36,8 +36,7 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-
-
+    "strictPropertyInitialization": false
   },
 }
 

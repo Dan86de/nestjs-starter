@@ -8,8 +8,28 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(uuid())
+  firstName String?
+  lastName  String?
+  email     String    @unique
+  password  String
+  role      Role      @relation(fields: [roleId], references: [id])
+  roleId    Int
+  status    Status    @relation(fields: [statusId], references: [id])
+  statusId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  User User[]
+}
+
+model Status {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  User User[]
 }

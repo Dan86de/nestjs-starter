@@ -1,16 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { AppModule } from '../src/app.module';
 import { server } from './setup';
+import { UsersModule } from '../src/modules/users/users.module';
+import { AppModule } from '../src/app.module';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const request = require('supertest');
 
-describe('AppController (e2e)', () => {
+describe('UsersController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, UsersModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -18,12 +19,7 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(server)
-      .get('/')
-      .expect(200)
-      .expect({ data: 'Hello World!' });
+  it('/users (GET)', () => {
+    return request(server).get('/users').expect(200).expect({ data: [] });
   });
 });
-
-// TODO: fix tests

@@ -3,14 +3,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import helmet from 'helmet';
 import { AppModule } from '../src/app.module';
 import { CacheService } from '../src/core/cache/cache.service';
-import { DatabaseService } from '../src/database/database.service';
+import { PrismaService } from '../src/database/prisma.service';
 import { LoggerService } from '../src/core/logger/logger.service';
 
 let app: INestApplication;
 let server: HttpServer;
 let moduleFixture: TestingModule;
 let cache: CacheService;
-let database: DatabaseService;
+let database: PrismaService;
 
 beforeAll(async () => {
   moduleFixture = await Test.createTestingModule({
@@ -25,7 +25,7 @@ beforeAll(async () => {
 
   // Get instances of services
   cache = moduleFixture.get<CacheService>(CacheService);
-  database = moduleFixture.get<DatabaseService>(DatabaseService);
+  database = moduleFixture.get<PrismaService>(PrismaService);
 
   await app.init();
   server = app.getHttpServer();
