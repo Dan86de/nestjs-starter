@@ -12,9 +12,11 @@ async function bootstrap() {
   });
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   const port = configService.get<EnvironmentVariables['PORT']>('PORT');
+  const host = `0.0.0.0`;
   app.useLogger(app.get(LoggerService));
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-  await app.listen(port);
+  await app.listen(port, host);
 }
+
 bootstrap();

@@ -1,25 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import request from 'supertest';
-import { AppModule } from './app.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { LoggerService } from './core/logger/logger.service';
+import { createMock } from '@golevelup/ts-jest';
 
-describe('AppController (e2e)', () => {
-  let app: INestApplication;
+describe('AppController', () => {
+  let appController: AppController;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [AppController],
+      providers: [
+        AppService,
+        {
+          provide: LoggerService,
+          useValue: createMock<LoggerService>(),
+        },
+      ],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-    await app.init();
+    appController = app.get<AppController>(AppController);
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect({ data: 'Hello World!' });
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(appController.getHello()).toBe('Hello World!');
+    });
   });
 });
