@@ -16,18 +16,9 @@ services:
     volumes:
       - nestjs_starter_postgres_data:/var/lib/postgresql/data # Needs updating
 
-  nestjs_starter_redis: # Needs updating
-    image: redis:alpine
-    container_name: nestjs_starter_redis # Needs updating
-    ports:
-      - '6379:6379'
-    volumes:
-      - nestjs_starter_redis_data:/data # Needs updating
-
 networks:
   default:
     name: nestjs_starter # Needs updating
 
 volumes:
   nestjs_starter_postgres_data: # Needs updating
-  nestjs_starter_redis_data: # Needs updating

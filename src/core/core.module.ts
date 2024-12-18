@@ -11,9 +11,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformResponseInterceptor } from './interceptors/transform-response/transform-response.interceptor';
 import { LoggerService } from './logger/logger.service';
 import { LoggerMiddleware } from './logger/logger.middleware';
-import { DatabaseModule } from '../database/database.module';
-import { CacheService } from './cache/cache.service';
-import { CacheModule } from './cache/cache.module';
 
 @Global()
 @Module({
@@ -23,8 +20,6 @@ import { CacheModule } from './cache/cache.module';
       load: [config],
       validationSchema: configurationValidationSchema,
     }),
-    DatabaseModule,
-    CacheModule,
   ],
   providers: [
     {
@@ -32,9 +27,8 @@ import { CacheModule } from './cache/cache.module';
       useClass: TransformResponseInterceptor,
     },
     LoggerService,
-    CacheService,
   ],
-  exports: [LoggerService, CacheService],
+  exports: [LoggerService],
 })
 export class CoreModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
