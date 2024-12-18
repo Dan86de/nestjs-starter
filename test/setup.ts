@@ -2,14 +2,12 @@ import { HttpServer, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import helmet from 'helmet';
 import { AppModule } from '../src/app.module';
-import { CacheService } from '../src/core/cache/cache.service';
 import { PrismaService } from '../src/database/prisma.service';
 import { LoggerService } from '../src/core/logger/logger.service';
 
 let app: INestApplication;
 let server: HttpServer;
 let moduleFixture: TestingModule;
-let cache: CacheService;
 let database: PrismaService;
 
 beforeAll(async () => {
@@ -24,7 +22,6 @@ beforeAll(async () => {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   // Get instances of services
-  cache = moduleFixture.get<CacheService>(CacheService);
   database = moduleFixture.get<PrismaService>(PrismaService);
 
   await app.init();
@@ -33,7 +30,6 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await database.resetDb();
-  await cache.reset();
 });
 
 afterAll(async () => {
