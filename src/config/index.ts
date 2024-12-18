@@ -11,11 +11,6 @@ export interface EnvironmentVariables {
   POSTGRES_DB: string;
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
-  // Redis
-  REDIS_HOST: string;
-  REDIS_PORT: number;
-  REDIS_USERNAME: string;
-  REDIS_PASSWORD: string;
 }
 
 export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
@@ -31,11 +26,6 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
   POSTGRES_DB: Joi.string(),
   POSTGRES_USER: Joi.string(),
   POSTGRES_PASSWORD: Joi.string(),
-  //  Redis
-  REDIS_HOST: Joi.string(),
-  REDIS_PORT: Joi.number().port().default(6379),
-  REDIS_USERNAME: Joi.string().valid(''),
-  REDIS_PASSWORD: Joi.string().valid(''),
 });
 
 export default (): EnvironmentVariables => {
@@ -50,11 +40,5 @@ export default (): EnvironmentVariables => {
       ? parseInt(process.env.POSTGRES_PORT, 10)
       : 5432,
     POSTGRES_DB: process.env.POSTGRES_DB ?? 'mydb',
-    REDIS_HOST: process.env.REDIS_HOST ?? 'localhost',
-    REDIS_PORT: process.env.REDIS_PORT
-      ? parseInt(process.env.REDIS_PORT, 10)
-      : 6379,
-    REDIS_USERNAME: process.env.REDIS_USERNAME ?? '',
-    REDIS_PASSWORD: process.env.REDIS_PASSWORD ?? '',
   };
 };
