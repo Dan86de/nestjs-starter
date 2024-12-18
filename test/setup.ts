@@ -14,7 +14,7 @@ let database: PrismaService;
 
 beforeAll(async () => {
   moduleFixture = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [AppModule.register({ driver: 'orm' })],
   }).compile();
 
   // Apply consistent set up to main.ts

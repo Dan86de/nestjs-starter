@@ -6,11 +6,11 @@ import { UsersInfrastructureModule } from './users/infrastructure/users-infrastr
 
 @Module({})
 export class AppModule {
-  static register(options: ApplicationBootstrapOptions) {
+  static register(options: ApplicationBootstrapOptions = { driver: 'orm' }) {
     return {
       module: AppModule,
       imports: [
-        CoreModule.forRoot(options),
+        CoreModule,
         UsersModule.withInfrastructure(
           UsersInfrastructureModule.use(options.driver),
         ),

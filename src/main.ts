@@ -8,14 +8,9 @@ import { LoggerService } from './core/logger/logger.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(
-    AppModule.register({
-      driver: 'orm',
-    }),
-    {
-      bufferLogs: true,
-    },
-  );
+  const app = await NestFactory.create(AppModule.register(), {
+    bufferLogs: true,
+  });
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   const port = configService.get<EnvironmentVariables['PORT']>('PORT');
   const host = `0.0.0.0`;
