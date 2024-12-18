@@ -4,6 +4,7 @@ export interface EnvironmentVariables {
   // Environment
   NODE_ENV: string;
   PORT: number;
+  API_PREFIX: string;
   // Database
   POSTGRES_HOST: string;
   POSTGRES_PORT: number;
@@ -23,6 +24,7 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
     .valid('development', 'production', 'test', 'provision')
     .default('development'),
   PORT: Joi.number().port().default(3000),
+  API_PREFIX: Joi.string().default('api'),
   // Database
   POSTGRES_HOST: Joi.string(),
   POSTGRES_PORT: Joi.number().port().default(5432),
@@ -40,6 +42,7 @@ export default (): EnvironmentVariables => {
   return {
     NODE_ENV: process.env.NODE_ENV || `development`,
     PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+    API_PREFIX: process.env.API_PREFIX ?? 'api',
     POSTGRES_USER: process.env.POSTGRES_USER ?? 'username',
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD ?? 'password',
     POSTGRES_HOST: process.env.POSTGRES_HOST ?? 'localhost',
