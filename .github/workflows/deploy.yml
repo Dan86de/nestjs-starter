@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/build
+      - name: Log Database URL
+        run: |
+          echo 'Database URL: $DATABASE_URL'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - name: Apply database migrations
         run: pnpx prisma migrate deploy
         env:
