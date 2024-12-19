@@ -8,13 +8,17 @@ import { HashingService } from '../ports/hashing.service';
 import { SignUpDto } from '../../presenters/http/authentication/dto/sign-up.dto';
 import { SignInDto } from '../../presenters/http/authentication/dto/sign-in.dto';
 import { IamUser } from '../../domain/user';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentVariables } from '../../../../config';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly usersRepository: IamUsersRepository,
     private readonly hashingService: HashingService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService<EnvironmentVariables>,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<IamUser> {
@@ -27,20 +31,15 @@ export class AuthenticationService {
 
     const hashedPassword = await this.hashingService.hash(signUpDto.password);
 
-    try {
-      return await this.usersRepository.save({
-        email: signUpDto.email,
-        password: hashedPassword,
-        role: signUpDto.role,
-        status: signUpDto.status,
-      });
-    } catch (error) {
-      console.log('CODE', (error as PrismaClientKnownRequestError).code);
-      throw new Error('Something went wrong');
-    }
+    return await this.usersRepository.save({
+      email: signUpDto.email,
+      password: hashedPassword,
+      role: signUpDto.role,
+      status: signUpDto.status,
+    });
   }
 
-  async signIn(signInDto: SignInDto): Promise<boolean> {
+  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
     const user = await this.usersRepository.findByEmail(signInDto.email);
 
     if (!user) {
@@ -56,6 +55,19 @@ export class AuthenticationService {
       throw new UnauthorizedException('Password does not match');
     }
 
-    return true;
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        audience: this.configService.get('JWT_TOKEN_AUDIENCE'),
+        issuer: this.configService.get('JWT_TOKEN_ISSUER'),
+        secret: this.configService.get('JWT_SECRET'),
+        expiresIn: this.configService.get('JWT_ACCESS_TOKEN_TTL'),
+      },
+    );
+
+    return { accessToken };
   }
 }

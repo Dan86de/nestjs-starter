@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LoggerService } from './core/logger/logger.service';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule.register({ driver: 'orm' }), {
@@ -24,6 +25,7 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
   app.use(helmet());
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   const options = new DocumentBuilder()
     .setTitle('API')
