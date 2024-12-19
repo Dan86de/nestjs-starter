@@ -11,6 +11,7 @@ import { IamUser } from '../../domain/user';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../../../../config';
+import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.entity';
 
 @Injectable()
 export class AuthenticationService {
@@ -59,7 +60,8 @@ export class AuthenticationService {
       {
         sub: user.id,
         email: user.email,
-      },
+        role: user.role,
+      } as IamActiveUserEntity,
       {
         audience: this.configService.get('JWT_TOKEN_AUDIENCE'),
         issuer: this.configService.get('JWT_TOKEN_ISSUER'),

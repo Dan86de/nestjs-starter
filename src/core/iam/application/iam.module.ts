@@ -1,5 +1,5 @@
 import { DynamicModule, Module, Type } from '@nestjs/common';
-import { BcryptService } from '../infrastructure/hashing/bcrypt.service';
+import { BcryptService } from './authentication/hashing/bcrypt.service';
 import { HashingService } from './ports/hashing.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { AuthenticationController } from '../presenters/http/authentication/authentication.controller';
