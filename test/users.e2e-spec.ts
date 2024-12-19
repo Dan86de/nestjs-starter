@@ -4,6 +4,6 @@ const request = require('supertest');
 
 describe('UsersController (e2e)', () => {
   it('/users (GET)', () => {
-    return request(server).get('/users').expect(200).expect({ data: [] });
+    return request(server).get('/users').expect(401);
   });
 });

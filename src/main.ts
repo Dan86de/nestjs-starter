@@ -4,11 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from './config';
 import helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { LoggerService } from './core/logger/logger.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { LoggerService } from './core/logger/logger.service';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule.register(), {
+  const app = await NestFactory.create(AppModule.register({ driver: 'orm' }), {
     bufferLogs: true,
   });
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
@@ -19,11 +20,12 @@ async function bootstrap() {
   app.setGlobalPrefix(apiPrefix, {
     exclude: ['/'],
   });
+  app.useLogger(app.get(LoggerService));
   app.enableVersioning({
     type: VersioningType.URI,
   });
-  app.useLogger(app.get(LoggerService));
   app.use(helmet());
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   const options = new DocumentBuilder()
     .setTitle('API')

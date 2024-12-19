@@ -11,7 +11,6 @@ export class LoggerService implements NestLogger {
     private readonly configService: ConfigService<EnvironmentVariables>,
   ) {
     const { combine, timestamp, printf, colorize, json } = winston.format;
-
     const isDevelopment = this.configService.get('NODE_ENV') === `development`;
 
     const logFormat = isDevelopment
