@@ -10,7 +10,7 @@ export class AppModule {
     return {
       module: AppModule,
       imports: [
-        CoreModule,
+        CoreModule.register(options),
         UsersModule.withInfrastructure(
           UsersInfrastructureModule.use(options.driver),
         ),

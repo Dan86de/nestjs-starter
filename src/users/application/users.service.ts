@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './ports/users.repository';
-import { UserFactory } from '../domain/factories/user.factory';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    public readonly userFactory: UserFactory,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
   findAll() {
     return this.usersRepository.findAll();
   }
