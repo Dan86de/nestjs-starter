@@ -13,6 +13,7 @@ import { IamUser } from '../../../domain/user';
 import { Response } from 'express';
 import { Auth } from '../../../application/authentication/decorators/auth.decorator';
 import { AuthType } from '../../../application/authentication/constants/iam.enums';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Auth(AuthType.None)
 @Controller({
@@ -27,14 +28,43 @@ export class AuthenticationController {
     return this.authenticationService.signUp(signUpDto);
   }
 
-  @Post('sign-in')
   @HttpCode(HttpStatus.OK)
+  @Post('sign-in')
   async signIn(
     @Res({ passthrough: true }) response: Response,
     @Body() signInDto: SignInDto,
   ) {
-    const { accessToken } = await this.authenticationService.signIn(signInDto);
+    const { accessToken, refreshToken } =
+      await this.authenticationService.signIn(signInDto);
     response.cookie('accessToken', accessToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+
+    response.cookie('refreshToken', refreshToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('refresh-tokens')
+  async refreshTokens(
+    @Res({ passthrough: true }) response: Response,
+    @Body() refreshTokensDto: RefreshTokenDto,
+  ) {
+    const { accessToken, refreshToken } =
+      await this.authenticationService.refreshTokens(refreshTokensDto);
+
+    response.cookie('accessToken', accessToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+
+    response.cookie('refreshToken', refreshToken, {
       secure: true,
       httpOnly: true,
       sameSite: true,

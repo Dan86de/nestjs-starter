@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../../../../config';
 import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.entity';
+import { RefreshTokenDto } from '../../presenters/http/authentication/dto/refresh-token.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -40,7 +41,9 @@ export class AuthenticationService {
     });
   }
 
-  async signIn(signInDto: SignInDto): Promise<{ accessToken: string }> {
+  async signIn(
+    signInDto: SignInDto,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const user = await this.usersRepository.findByEmail(signInDto.email);
 
     if (!user) {
@@ -56,11 +59,54 @@ export class AuthenticationService {
       throw new UnauthorizedException('Password does not match');
     }
 
-    const accessToken = await this.jwtService.signAsync(
+    return await this.generateTokens(user);
+  }
+
+  async generateTokens(user: IamUser) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.signToken<Partial<IamActiveUserEntity>>(
+        user.id,
+        this.configService.get('JWT_ACCESS_TOKEN_TTL')!,
+        {
+          email: user.email,
+          role: user.role,
+        },
+      ),
+      this.signToken(
+        user.id,
+        this.configService.get('JWT_REFRESH_TOKEN_TTL')!,
+        { email: user.email },
+      ),
+    ]);
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { email } = await this.jwtService.verifyAsync<
+        Pick<IamActiveUserEntity, 'email'>
+      >(refreshTokenDto.refreshToken, {
+        audience: this.configService.get('JWT_TOKEN_AUDIENCE'),
+        issuer: this.configService.get('JWT_TOKEN_ISSUER'),
+        secret: this.configService.get('JWT_SECRET'),
+      });
+
+      console.log({ email });
+      const user = await this.usersRepository.findByEmail(email);
+      return this.generateTokens(user);
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
+  }
+
+  private async signToken<T>(userId: string, expiresIn: number, payload?: T) {
+    return await this.jwtService.signAsync(
       {
-        sub: user.id,
-        email: user.email,
-        role: user.role,
+        sub: userId,
+        ...payload,
       } as IamActiveUserEntity,
       {
         audience: this.configService.get('JWT_TOKEN_AUDIENCE'),
@@ -69,7 +115,5 @@ export class AuthenticationService {
         expiresIn: this.configService.get('JWT_ACCESS_TOKEN_TTL'),
       },
     );
-
-    return { accessToken };
   }
 }

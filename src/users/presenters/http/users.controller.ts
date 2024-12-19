@@ -4,11 +4,13 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { User } from '../../domain/user';
 import { ActiveUserDecorator } from '../../../core/iam/application/decorators/active-user.decorator';
 import { IamActiveUserEntity } from '../../../core/iam/application/decorators/entities/iam-active-user.entity';
+import { Roles } from '../../../core/iam/application/decorators/role.decorator';
 
 @Controller({
   path: 'users',
   version: '1',
 })
+@Roles('ADMIN')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

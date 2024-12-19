@@ -16,6 +16,7 @@ export interface EnvironmentVariables {
   JWT_TOKEN_AUDIENCE: string;
   JWT_TOKEN_ISSUER: string;
   JWT_ACCESS_TOKEN_TTL: number;
+  JWT_REFRESH_TOKEN_TTL: number;
 }
 
 export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
@@ -36,25 +37,29 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
   JWT_TOKEN_AUDIENCE: Joi.string().required(),
   JWT_TOKEN_ISSUER: Joi.string().required(),
   JWT_ACCESS_TOKEN_TTL: Joi.number().default(60 * 60),
+  JWT_REFRESH_TOKEN_TTL: Joi.number().default(60 * 60 * 24),
 });
 
 export default (): EnvironmentVariables => {
   return {
     NODE_ENV: process.env.NODE_ENV || `development`,
-    PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+    PORT: parseInt(process.env.PORT ?? '3000', 10),
     API_PREFIX: process.env.API_PREFIX ?? 'api',
     POSTGRES_USER: process.env.POSTGRES_USER ?? 'username',
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD ?? 'password',
     POSTGRES_HOST: process.env.POSTGRES_HOST ?? 'localhost',
-    POSTGRES_PORT: process.env.POSTGRES_PORT
-      ? parseInt(process.env.POSTGRES_PORT, 10)
-      : 5432,
+    POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT ?? '5432', 10),
+
     POSTGRES_DB: process.env.POSTGRES_DB ?? 'mydb',
     JWT_SECRET: process.env.JWT_SECRET ?? 'secret',
     JWT_TOKEN_AUDIENCE: process.env.JWT_TOKEN_AUDIENCE ?? 'audience',
     JWT_TOKEN_ISSUER: process.env.JWT_TOKEN_ISSUER ?? 'issuer',
     JWT_ACCESS_TOKEN_TTL: parseInt(
       process.env.JWT_ACCESS_TOKEN_TTL ?? '3600',
+      10,
+    ),
+    JWT_REFRESH_TOKEN_TTL: parseInt(
+      process.env.JWT_REFRESH_TOKEN_TTL ?? '86400',
       10,
     ),
   };
