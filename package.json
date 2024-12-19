@@ -27,7 +27,7 @@
     "db:migrate:test": "dotenv -e .env.test -- npx prisma migrate reset --force --skip-seed",
     "db:studio": "npx prisma studio",
     "db:seed:dev": "ts-node ./src/database/seed.ts --environment development",
-    "db:seed:test": "ts-node ./src/database/seed.ts --environment test",
+    "db:seed:test": "ts-node ./src/database/seed.ts --environment test"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
