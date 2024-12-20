@@ -10,10 +10,10 @@ import { SignInDto } from '../../presenters/http/authentication/dto/sign-in.dto'
 import { IamUser } from '../../domain/user';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { EnvironmentVariables } from '../../../../config';
 import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.entity';
 import { RefreshTokenDto } from '../../presenters/http/authentication/dto/refresh-token.dto';
 import { AuthenticationService } from '../ports/authentication.service';
+import { AuthenticationEnvironmentVariables } from './config/authentication.config';
 
 @Injectable()
 export class AuthService implements AuthenticationService {
@@ -21,7 +21,7 @@ export class AuthService implements AuthenticationService {
     private readonly usersRepository: IamUsersRepository,
     private readonly hashingService: HashingService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService<EnvironmentVariables>,
+    private readonly configService: ConfigService<AuthenticationEnvironmentVariables>,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<IamUser> {

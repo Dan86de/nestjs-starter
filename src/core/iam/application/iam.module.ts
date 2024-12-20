@@ -9,9 +9,15 @@ import { AuthenticationGuard } from './authentication/guards/authentication.guar
 import { AccessTokenGuard } from './authentication/guards/access-token.guard';
 import { RolesGuard } from './authentication/guards/roles.guard';
 import { IamUsersInfrastructureModule } from '../infrastructure/persistence/iam-users-infrastructure.module';
+import { ConfigModule } from '@nestjs/config';
+import authenticationConfig from './authentication/config/authentication.config';
 
 @Module({
-  imports: [JwtModule, IamUsersInfrastructureModule],
+  imports: [
+    ConfigModule.forFeature(authenticationConfig),
+    JwtModule,
+    IamUsersInfrastructureModule,
+  ],
   providers: [
     {
       provide: HashingService,
