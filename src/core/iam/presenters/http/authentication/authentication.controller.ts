@@ -1,4 +1,4 @@
-import { AuthenticationService } from '../../../application/authentication/authentication.service';
+import { AuthService } from '../../../application/authentication/authentication.service';
 import {
   Body,
   Controller,
@@ -21,7 +21,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
   version: '1',
 })
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(private readonly authenticationService: AuthService) {}
 
   @Post('sign-up')
   signUp(@Body() signUpDto: SignUpDto): Promise<IamUser> {
