@@ -6,16 +6,16 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LoggerService } from './logger/logger.service';
 import cookieParser from 'cookie-parser';
-import { AppEnvironmentVariables } from './config/app.config';
+import { EnvironmentVariables } from './config/app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-  const configService = app.get(ConfigService<AppEnvironmentVariables, true>);
-  const port = configService.get<AppEnvironmentVariables['PORT']>('PORT');
+  const configService = app.get(ConfigService<EnvironmentVariables, true>);
+  const port = configService.get<EnvironmentVariables['PORT']>('PORT');
   const apiPrefix =
-    configService.get<AppEnvironmentVariables['API_PREFIX']>('API_PREFIX');
+    configService.get<EnvironmentVariables['API_PREFIX']>('API_PREFIX');
   const host = `0.0.0.0`;
   app.setGlobalPrefix(apiPrefix!, {
     exclude: ['/'],

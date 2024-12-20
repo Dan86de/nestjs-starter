@@ -13,7 +13,7 @@ import config, { configurationValidationSchema } from './config/app.config';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
-      validationSchema: [configurationValidationSchema],
+      validationSchema: configurationValidationSchema,
     }),
     CoreModule,
     IamModule,
