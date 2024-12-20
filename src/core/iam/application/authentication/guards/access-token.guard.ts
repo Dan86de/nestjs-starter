@@ -7,14 +7,14 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { EnvironmentVariables } from '../../../../../config';
 import { REQUEST_USER_KEY } from '../constants/iam.constants';
+import { AuthenticationEnvironmentVariables } from '../config/authentication.config';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService<EnvironmentVariables>,
+    private readonly configService: ConfigService<AuthenticationEnvironmentVariables>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
