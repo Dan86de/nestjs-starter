@@ -9,8 +9,6 @@ import {
 import { UsersService } from '../../application/users.service';
 import { ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 import { User } from '../../domain/user';
-import { ActiveUserDecorator } from '../../../core/iam/application/decorators/active-user.decorator';
-import { IamActiveUserEntity } from '../../../core/iam/application/decorators/entities/iam-active-user.entity';
 import { Roles } from '../../../core/iam/application/decorators/role.decorator';
 
 @Controller({
@@ -28,8 +26,7 @@ export class UsersController {
   })
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll(@ActiveUserDecorator() user: IamActiveUserEntity) {
-    console.log(user);
+  findAll() {
     return this.usersService.findAll();
   }
 

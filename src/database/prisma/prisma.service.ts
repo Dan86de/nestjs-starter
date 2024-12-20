@@ -21,7 +21,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     try {
       await this.$executeRawUnsafe(`TRUNCATE TABLE ${tables} CASCADE;`);
     } catch (error) {
-      console.log({ error });
+      console.log('Something went wrong with reset db.', { error });
     }
   }
 }

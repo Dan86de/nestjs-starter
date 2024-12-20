@@ -1,7 +1,7 @@
 import { UsersRepository } from '../../../../application/ports/users.repository';
 import { User } from '../../../../domain/user';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../../../../database/prisma.service';
+import { PrismaService } from '../../../../../database/prisma/prisma.service';
 import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()

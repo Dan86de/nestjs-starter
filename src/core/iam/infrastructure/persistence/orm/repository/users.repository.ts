@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IamUsersRepository } from '../../../../application/ports/users.repository';
-import { PrismaService } from '../../../../../../database/prisma.service';
+import { PrismaService } from '../../../../../../database/prisma/prisma.service';
 import { SignUpDto } from '../../../../presenters/http/authentication/dto/sign-up.dto';
 import { IamUser } from '../../../../domain/user';
 import { IamUserMapper } from '../mappers/iam-user.mapper';

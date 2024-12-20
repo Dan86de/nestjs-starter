@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { IamUsersRepository } from '../../../application/ports/users.repository';
 import { IamOrmUserRepository } from './repository/users.repository';
-import { PrismaModule } from '../../../../../database/prisma.module';
+import { PrismaModule } from '../../../../../database/prisma/prisma.module';
 
 @Module({
   imports: [PrismaModule],
