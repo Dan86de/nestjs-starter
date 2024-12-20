@@ -1,19 +1,19 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { LoggerService } from './logger.service';
-import { EnvironmentVariables } from '../config';
 import { ConfigService } from '@nestjs/config';
+import { AppEnvironmentVariables } from '../config/app.config';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(
     private readonly logger: LoggerService,
-    private readonly configService: ConfigService<EnvironmentVariables>,
+    private readonly configService: ConfigService<AppEnvironmentVariables>,
   ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    const environment = this.configService.get(`NODE_ENV`);
-    if (environment === 'test') {
+    const isTestEnv = this.configService.get(`NODE_ENV`) === 'test';
+    if (isTestEnv) {
       return next();
     }
     const start = Date.now();

@@ -1,23 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { EnvironmentVariables } from './config';
 import helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LoggerService } from './logger/logger.service';
 import cookieParser from 'cookie-parser';
+import { AppEnvironmentVariables } from './config/app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-  const configService = app.get(ConfigService<EnvironmentVariables, true>);
-  const port = configService.get<EnvironmentVariables['PORT']>('PORT');
+  const configService = app.get(ConfigService<AppEnvironmentVariables, true>);
+  const port = configService.get<AppEnvironmentVariables['PORT']>('PORT');
   const apiPrefix =
-    configService.get<EnvironmentVariables['API_PREFIX']>('API_PREFIX');
+    configService.get<AppEnvironmentVariables['API_PREFIX']>('API_PREFIX');
   const host = `0.0.0.0`;
-  app.setGlobalPrefix(apiPrefix, {
+  app.setGlobalPrefix(apiPrefix!, {
     exclude: ['/'],
   });
   app.useLogger(app.get(LoggerService));
@@ -36,7 +36,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
-  await app.listen(port, host);
+  await app.listen(port!, host);
 }
 
 bootstrap();
