@@ -1,14 +1,14 @@
 import { Injectable, LoggerService as NestLogger } from '@nestjs/common';
 import * as winston from 'winston';
 import { ConfigService } from '@nestjs/config';
-import { AppEnvironmentVariables } from '../config/app.config';
+import { EnvironmentVariables } from '../config/app.config';
 
 @Injectable()
 export class LoggerService implements NestLogger {
   private readonly logger: winston.Logger;
 
   constructor(
-    private readonly configService: ConfigService<AppEnvironmentVariables>,
+    private readonly configService: ConfigService<EnvironmentVariables>,
   ) {
     const { combine, timestamp, printf, colorize, json } = winston.format;
     const isDevelopment = this.configService.get('NODE_ENV') === 'development';

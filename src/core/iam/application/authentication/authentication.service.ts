@@ -13,7 +13,7 @@ import { ConfigService } from '@nestjs/config';
 import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.entity';
 import { RefreshTokenDto } from '../../presenters/http/authentication/dto/refresh-token.dto';
 import { AuthenticationService } from '../ports/authentication.service';
-import { AuthenticationEnvironmentVariables } from './config/authentication.config';
+import { EnvironmentVariables } from '../../../../config/app.config';
 
 @Injectable()
 export class AuthService implements AuthenticationService {
@@ -21,7 +21,7 @@ export class AuthService implements AuthenticationService {
     private readonly usersRepository: IamUsersRepository,
     private readonly hashingService: HashingService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService<AuthenticationEnvironmentVariables>,
+    private readonly configService: ConfigService<EnvironmentVariables>,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<IamUser> {
