@@ -1,17 +1,19 @@
 name: Deploy
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed
   workflow_run:
-    workflows: ['Tests']
+    workflows: [ 'Tests' ]
     types:
       - completed
 
 jobs:
   deploy:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.pull_request.merged == true && github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

@@ -2,8 +2,8 @@ import { HttpServer, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import helmet from 'helmet';
 import { AppModule } from '../src/app.module';
-import { PrismaService } from '../src/database/prisma.service';
-import { LoggerService } from '../src/core/logger/logger.service';
+import { PrismaService } from '../src/database/prisma/prisma.service';
+import { LoggerService } from '../src/logs/logger.service';
 
 let app: INestApplication;
 let server: HttpServer;
@@ -12,7 +12,7 @@ let database: PrismaService;
 
 beforeAll(async () => {
   moduleFixture = await Test.createTestingModule({
-    imports: [AppModule.register({ driver: 'orm' })],
+    imports: [AppModule],
   }).compile();
 
   // Apply consistent set up to main.ts

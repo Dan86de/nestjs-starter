@@ -5,11 +5,11 @@ import { EnvironmentVariables } from './config';
 import helmet from 'helmet';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { LoggerService } from './core/logger/logger.service';
+import { LoggerService } from './logs/logger.service';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule.register({ driver: 'orm' }), {
+  const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
   const configService = app.get(ConfigService<EnvironmentVariables, true>);

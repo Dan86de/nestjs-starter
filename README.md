@@ -12,7 +12,8 @@ NestJS REST API boilerplate for your next project.
 ### Features
 
 ---
-- [x] Database support with [Prisma](https://www.prisma.io/) and [PostgresSQL](https://www.postgresql.org/)
+- [x] Database [PostgresSQL](https://www.postgresql.org/)
+- [x] Prisma ORM [Prisma](https://www.prisma.io/)
 - [x] Logging with [Winston](https://github.com/winstonjs/winston)
 - [x] Authentication with username and password (JWT, public and protected routes)
 - [x] Roles based access control
@@ -20,5 +21,8 @@ NestJS REST API boilerplate for your next project.
 ### Todo
 
 ---
-- [ ] Add more access/refresh token revalidation
-- [ ] Add more tests
+- [ ] Add access/refresh token revalidation
+- [ ] Add file upload service
+- [ ] Add email service
+- [ ] Add payment service
+- [ ] Add cache service

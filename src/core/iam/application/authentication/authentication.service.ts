@@ -95,7 +95,6 @@ export class AuthService implements AuthenticationService {
         secret: this.configService.get('JWT_SECRET'),
       });
 
-      console.log({ email });
       const user = await this.usersRepository.findByEmail(email);
       return this.generateTokens(user);
     } catch (error) {
