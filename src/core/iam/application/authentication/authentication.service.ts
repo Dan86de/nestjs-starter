@@ -13,9 +13,10 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from '../../../../config';
 import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.entity';
 import { RefreshTokenDto } from '../../presenters/http/authentication/dto/refresh-token.dto';
+import { AuthenticationService } from '../ports/authentication.service';
 
 @Injectable()
-export class AuthenticationService {
+export class AuthService implements AuthenticationService {
   constructor(
     private readonly usersRepository: IamUsersRepository,
     private readonly hashingService: HashingService,

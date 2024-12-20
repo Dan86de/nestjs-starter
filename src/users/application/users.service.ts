@@ -7,4 +7,10 @@ export class UsersService {
   findAll() {
     return this.usersRepository.findAll();
   }
+  findOne(id: string) {
+    return this.usersRepository.findOne(id);
+  }
+  delete(id: string) {
+    return this.usersRepository.delete(id);
+  }
 }

@@ -1,7 +1,7 @@
 import { DynamicModule, Module, Type } from '@nestjs/common';
 import { BcryptService } from './authentication/hashing/bcrypt.service';
 import { HashingService } from './ports/hashing.service';
-import { AuthenticationService } from './authentication/authentication.service';
+import { AuthService } from './authentication/authentication.service';
 import { AuthenticationController } from '../presenters/http/authentication/authentication.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
@@ -24,7 +24,7 @@ import { RolesGuard } from './authentication/guards/roles.guard';
       useClass: RolesGuard,
     },
     AccessTokenGuard,
-    AuthenticationService,
+    AuthService,
   ],
   controllers: [AuthenticationController],
 })
