@@ -3,7 +3,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformResponseInterceptor } from './interceptors/transform-response/transform-response.interceptor';
 import { ConfigModule } from '@nestjs/config';
 import config, { configurationValidationSchema } from '../config';
-import { LoggerModule } from '../logs/logger.module';
+import { LoggerModule } from '../logger/logger.module';
 
 @Global()
 @Module({

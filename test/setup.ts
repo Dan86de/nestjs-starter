@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import helmet from 'helmet';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/database/prisma/prisma.service';
-import { LoggerService } from '../src/logs/logger.service';
+import { LoggerService } from '../src/logger/logger.service';
 
 let app: INestApplication;
 let server: HttpServer;
