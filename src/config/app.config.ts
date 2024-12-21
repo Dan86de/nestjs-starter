@@ -12,6 +12,8 @@ export interface EnvironmentVariables {
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
 
+  DATABASE_URL: string;
+
   JWT_SECRET: string;
   JWT_TOKEN_AUDIENCE: string;
   JWT_TOKEN_ISSUER: string;
@@ -32,6 +34,7 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
   POSTGRES_DB: Joi.string(),
   POSTGRES_USER: Joi.string(),
   POSTGRES_PASSWORD: Joi.string(),
+  DATABASE_URL: Joi.string(),
   // JWT
   JWT_SECRET: Joi.string().required(),
   JWT_TOKEN_AUDIENCE: Joi.string().required(),
@@ -49,8 +52,9 @@ export default (): EnvironmentVariables => {
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD ?? 'password',
     POSTGRES_HOST: process.env.POSTGRES_HOST ?? 'localhost',
     POSTGRES_PORT: parseInt(process.env.POSTGRES_PORT ?? '5432', 10),
-
     POSTGRES_DB: process.env.POSTGRES_DB ?? 'mydb',
+    DATABASE_URL: process.env.DATABASE_URL ?? '',
+
     JWT_SECRET: process.env.JWT_SECRET ?? 'secret',
     JWT_TOKEN_AUDIENCE: process.env.JWT_TOKEN_AUDIENCE ?? 'audience',
     JWT_TOKEN_ISSUER: process.env.JWT_TOKEN_ISSUER ?? 'issuer',
