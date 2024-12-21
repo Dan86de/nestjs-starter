@@ -3,7 +3,6 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { IamUsersRepository } from '../ports/users.repository';
 import { HashingService } from '../ports/hashing.service';
 import { SignUpDto } from '../../presenters/http/authentication/dto/sign-up.dto';
 import { SignInDto } from '../../presenters/http/authentication/dto/sign-in.dto';
@@ -14,6 +13,7 @@ import { IamActiveUserEntity } from '../decorators/entities/iam-active-user.enti
 import { RefreshTokenDto } from '../../presenters/http/authentication/dto/refresh-token.dto';
 import { AuthenticationService } from '../ports/authentication.service';
 import { EnvironmentVariables } from '../../../../config/app.config';
+import { IamUsersRepository } from '../ports/authentication-users.repository';
 
 @Injectable()
 export class AuthService implements AuthenticationService {
