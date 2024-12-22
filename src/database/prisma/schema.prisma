@@ -33,3 +33,11 @@ model Status {
   name String @unique
   User User[]
 }
+
+model File {
+  id        String    @id @default(uuid())
+  path      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}

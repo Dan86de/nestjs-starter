@@ -30,6 +30,8 @@
     "db:seed:test": "ts-node src/database/prisma/seed.ts --environment test"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.717.0",
+    "@aws-sdk/s3-request-presigner": "^3.717.0",
     "@nestjs/common": "^10.4.15",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.4.15",
@@ -45,6 +47,7 @@
     "cookie-parser": "^1.4.7",
     "helmet": "^8.0.0",
     "joi": "^17.13.3",
+    "multer-s3": "^3.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "winston": "^3.17.0"
@@ -58,6 +61,8 @@
     "@types/cookie-parser": "^1",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/multer": "^1.4.12",
+    "@types/multer-s3": "^3.0.3",
     "@types/node": "^22.10.2",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
