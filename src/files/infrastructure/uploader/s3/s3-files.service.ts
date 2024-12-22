@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { File } from '../../../domain/file';
-import { FilesRepository } from 'src/files/application/ports/files.repository';
+import { FilesRepository } from '../../../application/ports/files.repository';
 
 @Injectable()
 export class S3FilesService {
