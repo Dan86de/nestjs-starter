@@ -6,6 +6,7 @@ import { PrismaErrorFilter } from './database/prisma/filters/prisma-error-filter
 import { IamModule } from './core/iam/application/iam.module';
 import { ConfigModule } from '@nestjs/config';
 import config, { configurationValidationSchema } from './config/app.config';
+import { FilesModule } from './files/files.module';
 
 @Global()
 @Module({
@@ -18,6 +19,7 @@ import config, { configurationValidationSchema } from './config/app.config';
     CoreModule,
     IamModule,
     UsersModule,
+    FilesModule,
   ],
   providers: [
     {

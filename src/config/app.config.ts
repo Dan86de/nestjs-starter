@@ -19,6 +19,12 @@ export interface EnvironmentVariables {
   JWT_TOKEN_ISSUER: string;
   JWT_ACCESS_TOKEN_TTL: number;
   JWT_REFRESH_TOKEN_TTL: number;
+
+  AWS_S3_REGION: string;
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
+  AWS_S3_BUCKET_NAME: string;
+  AWS_S3_MAX_FILE_SIZE: number;
 }
 
 export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
@@ -41,6 +47,12 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
   JWT_TOKEN_ISSUER: Joi.string().required(),
   JWT_ACCESS_TOKEN_TTL: Joi.number().default(60 * 60),
   JWT_REFRESH_TOKEN_TTL: Joi.number().default(60 * 60 * 24),
+  //AWS S3
+  AWS_S3_REGION: Joi.string().required(),
+  AWS_ACCESS_KEY_ID: Joi.string().required(),
+  AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+  AWS_S3_BUCKET_NAME: Joi.string().required(),
+  AWS_S3_MAX_FILE_SIZE: Joi.number().default(1024 * 1024 * 5),
 });
 
 export default (): EnvironmentVariables => {
@@ -64,6 +76,14 @@ export default (): EnvironmentVariables => {
     ),
     JWT_REFRESH_TOKEN_TTL: parseInt(
       process.env.JWT_REFRESH_TOKEN_TTL ?? '86400',
+      10,
+    ),
+    AWS_S3_REGION: process.env.AWS_S3_REGION ?? '',
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID ?? '',
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY ?? '',
+    AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME ?? '',
+    AWS_S3_MAX_FILE_SIZE: parseInt(
+      process.env.AWS_S3_MAX_FILE_SIZE ?? '5242880',
       10,
     ),
   };
