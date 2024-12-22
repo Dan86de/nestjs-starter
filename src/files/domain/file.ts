@@ -35,11 +35,4 @@ export class File {
     },
   )
   path: string;
-  constructor(
-    public fileId: string,
-    public filePath: string,
-  ) {
-    this.id = fileId;
-    this.path = filePath;
-  }
 }
