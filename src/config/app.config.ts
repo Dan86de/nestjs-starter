@@ -26,6 +26,7 @@ export interface EnvironmentVariables {
   AWS_S3_BUCKET_NAME: string;
   AWS_S3_MAX_FILE_SIZE: number;
   AWS_S3_ENDPOINT: string;
+  AWS_S3_PUBLIC_URL: string;
 }
 
 export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
@@ -55,6 +56,7 @@ export const configurationValidationSchema = Joi.object<EnvironmentVariables>({
   AWS_S3_BUCKET_NAME: Joi.string().required(),
   AWS_S3_MAX_FILE_SIZE: Joi.number().default(1024 * 1024 * 5),
   AWS_S3_ENDPOINT: Joi.string(),
+  AWS_S3_PUBLIC_URL: Joi.string(),
 });
 
 export default (): EnvironmentVariables => {
@@ -89,5 +91,6 @@ export default (): EnvironmentVariables => {
       10,
     ),
     AWS_S3_ENDPOINT: process.env.AWS_S3_ENDPOINT ?? '',
+    AWS_S3_PUBLIC_URL: process.env.AWS_S3_PUBLIC_URL ?? '',
   };
 };
