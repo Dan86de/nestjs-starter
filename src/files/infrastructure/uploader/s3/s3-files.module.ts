@@ -26,14 +26,6 @@ import { OrmFilePersistenceModule } from '../../persistence/orm/orm-files-persis
         const fileSize = configService.get('AWS_S3_MAX_FILE_SIZE');
         const endpoint = configService.get('AWS_S3_ENDPOINT');
 
-        console.log({
-          accessKeyId,
-          secretAccessKey,
-          bucket,
-          region,
-          fileSize,
-        });
-
         const s3 = new S3Client({
           endpoint: endpoint,
           region,
