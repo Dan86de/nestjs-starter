@@ -21,5 +21,6 @@ export class S3FilesService {
     }
 
     return await this.fileRepository.create({ path: file.location });
+
   }
 }

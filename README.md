@@ -21,7 +21,6 @@ NestJS REST API boilerplate for your next project.
 
 ### Todo
 
----
 - [ ] Add access/refresh token revalidation
 - [ ] Add email
 - [ ] Add payment
