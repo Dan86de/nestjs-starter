@@ -3,7 +3,10 @@ import { File } from '../../../../domain/file';
 
 export class FileMapper {
   static toDomain(raw: FileEntity): File {
-    return new File(raw.id, raw.path);
+    return {
+      id: raw.id,
+      path: raw.path,
+    };
   }
 
   static toPersistence(domainEntity: File): FileEntity {
