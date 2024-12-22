@@ -10,7 +10,7 @@ import { FilesRepository } from '../../../application/ports/files.repository';
 export class S3FilesService {
   constructor(private readonly fileRepository: FilesRepository) {}
 
-  async create(file: Express.MulterS3.File): Promise<{ file: File }> {
+  async create(file: Express.MulterS3.File): Promise<File> {
     if (!file) {
       throw new UnprocessableEntityException({
         status: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -20,10 +20,6 @@ export class S3FilesService {
       });
     }
 
-    const fileEntity = new File(file.key, file.location);
-
-    return {
-      file: await this.fileRepository.create(fileEntity),
-    };
+    return await this.fileRepository.create({ path: file.path });
   }
 }

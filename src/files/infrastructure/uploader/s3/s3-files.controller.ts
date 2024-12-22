@@ -42,7 +42,7 @@ export class S3FilesController {
   async uploadFile(
     @UploadedFile() file: Express.MulterS3.File,
   ): Promise<FileResponseDto> {
-    console.log({ file });
-    return this.filesService.create(file);
+    const newFile = await this.filesService.create(file);
+    return { file: newFile };
   }
 }
