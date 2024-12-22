@@ -20,6 +20,6 @@ export class S3FilesService {
       });
     }
 
-    return await this.fileRepository.create({ path: file.path });
+    return await this.fileRepository.create({ path: file.key });
   }
 }
