@@ -6,7 +6,7 @@ import {
 import { S3FilesService } from './s3-files.service';
 import { S3FilesController } from './s3-files.controller';
 import { MulterModule } from '@nestjs/platform-express';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import multerS3 from 'multer-s3';
 import { S3Client } from '@aws-sdk/client-s3';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
@@ -14,7 +14,6 @@ import { OrmFilePersistenceModule } from '../../persistence/orm/orm-files-persis
 
 @Module({
   imports: [
-    ConfigModule,
     OrmFilePersistenceModule,
     MulterModule.registerAsync({
       imports: [OrmFilePersistenceModule],
