@@ -24,6 +24,7 @@ import { OrmFilePersistenceModule } from '../../persistence/orm/orm-files-persis
         const bucket = configService.get('AWS_S3_BUCKET_NAME');
         const region = configService.get('AWS_S3_REGION');
         const fileSize = configService.get('AWS_S3_MAX_FILE_SIZE');
+        const endpoint = configService.get('AWS_S3_ENDPOINT');
 
         console.log({
           accessKeyId,
@@ -34,7 +35,7 @@ import { OrmFilePersistenceModule } from '../../persistence/orm/orm-files-persis
         });
 
         const s3 = new S3Client({
-          endpoint: 'https://fra1.digitaloceanspaces.com',
+          endpoint: endpoint,
           region,
           credentials: {
             accessKeyId,
