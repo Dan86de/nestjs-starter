@@ -8,7 +8,11 @@ import { FileMapper } from '../mappers/file.mapper';
 export class OrmFilesRepository implements FilesRepository {
   constructor(private readonly prismaService: PrismaService) {}
   async create(data: Omit<File, 'id'>): Promise<File> {
-    const rawFile = await this.prismaService.file.create({ data });
+    const rawFile = await this.prismaService.file.create({
+      data: {
+        path: data.path,
+      },
+    });
     return FileMapper.toDomain(rawFile);
   }
 
